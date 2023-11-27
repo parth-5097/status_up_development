@@ -1,0 +1,144 @@
+<div class="right-content">
+  <h3>Payouts</h3>
+  <h4>Total sum --> {{ sumTotal }}</h4>
+  <div>
+    <input #date type="date" name="" id="" />
+    <button
+      class="btn"
+      (click)="onFillDate(date.value)"
+      style="margin-top: 5px; margin-left: 5px"
+    >
+      Change Date
+    </button>
+  </div>
+
+  <button class="btn" (click)="loadMore()" style="float: right">
+    Load More
+  </button>
+  <button
+    class="btn"
+    (click)="onExport()"
+    style="float: right; margin-bottom: 7px; margin-right: 5px"
+  >
+    Export
+  </button>
+  <button
+    class="btn"
+    style="float: right; margin-right: 5px"
+    (click)="onRefresh()"
+  >
+    Reload
+  </button>
+
+  <div class="section-div">
+    <table
+      datatable
+      [dtOptions]="dtOptions"
+      [dtTrigger]="dtTrigger"
+      class="row-border hover"
+    >
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Payment Date</th>
+          <th>User ID</th>
+          <th>Acount Name</th>
+          <th>Acount Number</th>
+          <th>Acount Type Text</th>
+          <th>Approved</th>
+          <th>Bank Text</th>
+          <th>Branch Code Text</th>
+          <th>E-Wallet</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Mobile Number</th>
+          <th>Paid out</th>
+          <th>Time</th>
+          <th>Value</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <div class="loader" style="margin-left: 50%"></div>
+        <tr *ngFor="let person of data">
+          <td>{{ person.id }}</td>
+          <td>{{ person.date }}</td>
+          <td>{{ person.userId }}</td>
+          <td>{{ person.accountNameText }}</td>
+          <td>{{ person.accountNumberText }}</td>
+          <td>{{ person.accountTypeText }}</td>
+          <td
+            (click)="
+              onApprovedChange(
+                person.id,
+                person.approved,
+                person.pathToUserRecord
+              )
+            "
+          >
+            {{ person.approved }}
+          </td>
+          <td>{{ person.bankText }}</td>
+          <td>{{ person.brandCodeText }}</td>
+          <td>{{ person.eWallet }}</td>
+          <td>{{ person.fisrtName }}</td>
+          <td>{{ person.lastName }}</td>
+          <td>{{ person.mobileNumber }}</td>
+          <td
+            (click)="
+              onPaymentChange(
+                person.id,
+                person.paidOut,
+                person.pathToUserRecord
+              )
+            "
+          >
+            {{ person.paidOut }}
+          </td>
+          <td>{{ person.time }}</td>
+          <td *ngIf="person.isEditable">
+            <input #val type="text" (change)="person.value = val.value" />
+          </td>
+          <td
+            *ngIf="!person.isEditable"
+            (click)="person.isEditable = !person.isEditable"
+          >
+            {{ person.value }}
+          </td>
+          <td>
+            <button
+              class="btn"
+              [disabled]="!person.isEditable"
+              (click)="
+                [
+                  (person.isEditable = !person.isEditable),
+                  onChange(person.id, person.value, person.pathToUserRecord)
+                ]
+              "
+            >
+              Change Value
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>
+            <select #val class="custom-select">
+              <option value="true">true</option>
+              <option value="false">false</option>
+            </select>
+            <br />
+            <button
+              class="btn"
+              style="margin-top: 7px"
+              (click)="onPaidoutFilter(val.value)"
+            >
+              Filter by Paid out
+            </button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

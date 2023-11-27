@@ -1,0 +1,54 @@
+<div>
+  <h3 style="margin-left: 20px">Images</h3>
+  <input
+    #date
+    type="date"
+    name=""
+    id=""
+    [value]="todayDate"
+    style="margin-left: 20px"
+  />
+  <button
+    class="btn"
+    (click)="onChange(date.value)"
+    style="margin-top: 5px; margin-left: 5px"
+  >
+    Change Date
+  </button>
+  <input #id type="text" name="" id="" placeholder="Enter user id" style="float: right" />
+  <button
+    class="btn"
+    style="margin-right: 5px; float: right"
+    (click)="onUserImage(id.value)"
+  >
+    Get Images
+  </button>
+</div>
+<div class="right-content">
+  <div *ngIf="imageFile.length > 0" class="section-div image-grid">
+    <div
+      *ngFor="let image of imageFile; index as i"
+      id="imageDiv"
+      (click)="onClickImage(image, i)"
+    >
+      <img [src]="image" />
+    </div>
+  </div>
+</div>
+
+<div id="userModel" class="modal">
+  <div *ngIf="imageAct" class="modal-content">
+    <div class="modal-header">
+      <h2>{{ imageAct.id }}</h2>
+      <span class="close" id="model-close-btn" (click)="onClose()"
+        >&times;</span
+      >
+    </div>
+    <div *ngIf="imageAct" class="modal-body">
+      <p>User Name: {{ imageAct.name }}</p>
+      <p>Date: {{ imageAct.date }}</p>
+
+      <img [src]="image" />
+    </div>
+  </div>
+</div>

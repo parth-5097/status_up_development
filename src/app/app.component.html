@@ -1,0 +1,37 @@
+<div *ngIf="show !== 'login'" class="main-outer">
+  <div class="left-sidebar">
+    <h3>Welcome Admin!</h3>
+    <div>
+      <div [routerLink]="['/users']" [routerLinkActive]="'active'" class="tab">
+        <a>Users</a>
+      </div>
+      <div
+        [routerLink]="['/submissions']"
+        [routerLinkActive]="'active'"
+        class="tab"
+      >
+        <a>Submissions</a>
+      </div>
+      <div
+        [routerLink]="['/payouts']"
+        [routerLinkActive]="'active'"
+        class="tab"
+      >
+        <a>Payouts</a>
+      </div>
+      <div [routerLink]="['/image']" [routerLinkActive]="'active'" class="tab">
+        <a>Image</a>
+      </div>
+      <div class="tab">
+        <a href="javascript:void(0)" (click)="logout()">Logout</a>
+      </div>
+    </div>
+  </div>
+  <div class="right-container">
+    <div class="right-header">
+      <h4 style="margin-left: 10px">Status Up Development</h4>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<router-outlet *ngIf="show === 'login'"></router-outlet>

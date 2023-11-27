@@ -1,0 +1,93 @@
+<div class="right-content">
+  <h3>Submissions</h3>
+  <h4>Total amount --> {{ totalAmount }}</h4>
+  <button class="btn" (click)="loadMore()" style="float: right">
+    Load More
+  </button>
+  <button
+    class="btn"
+    (click)="onExport()"
+    style="float: right; margin-bottom: 7px; margin-right: 5px"
+  >
+    Export
+  </button>
+
+  <div>
+    <input #date type="date" name="" id="" />
+    <button
+      class="btn"
+      (click)="onFillDate(date.value)"
+      style="margin-top: 5px; margin-left: 5px"
+    >
+      Change Date
+    </button>
+  </div>
+
+  <div class="section-div">
+    <table
+      datatable
+      [dtOptions]="dtOptions"
+      [dtTrigger]="dtTrigger"
+      class="row-border hover"
+    >
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Date of submission</th>
+          <th>User ID</th>
+          <th>Amount Earned</th>
+          <th>Contacts</th>
+          <th>Paid</th>
+          <th>Counts</th>
+          <th>Approved</th>
+          <th>View Image</th>
+        </tr>
+      </thead>
+      <tbody>
+        <div class="loader" style="margin-left: 50%"></div>
+        <tr *ngFor="let person of data">
+          <td>{{ person.id }}</td>
+          <td>{{ person.date }}</td>
+          <td>{{ person.userID }}</td>
+          <td>{{ person.amountEarned }}</td>
+          <td>{{ person.numberOfContacts }}</td>
+          <td>{{ person.isPaid }}</td>
+          <td>{{ person.viewCount }}</td>
+          <td
+            (click)="onClick(person.id, person.viewsApproved, person.pathToUserRecord)"
+          >
+            {{ person.viewsApproved }}
+          </td>
+          <td>
+            <button class="btn" (click)="onImage(person.imageFile)">
+              View Image
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td (click)="onFilApprove(id.value)">
+            <input #id type="text" />Filter by View approved
+          </td>
+          <td (click)="onFilEmail(email.value)">
+            <input #email type="text" />Filter by UserEmail
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+
+<div id="userModel" class="modal" (click)="onClose()">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close" id="model-close-btn" (click)="onClose()"
+        >&times;</span
+      >
+    </div>
+    <div *ngIf="image" class="modal-body">
+      <img [src]="image" />
+    </div>
+  </div>
+</div>

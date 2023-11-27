@@ -1,0 +1,132 @@
+<div class="right-content">
+  <h3>Users</h3>
+  <div *ngIf="filterUser">
+    <pre>{{ filterUser | json }}</pre>
+  </div>
+
+  <button
+    class="btn"
+    (click)="onExport()"
+    style="float: right; margin-bottom: 7px"
+  >
+    Export
+  </button>
+
+  <div class="section-div">
+    <table
+      datatable
+      [dtOptions]="dtOptions"
+      [dtTrigger]="dtTrigger"
+      class="row-border hover"
+    >
+      <thead>
+        <tr>
+          <th>Links</th>
+          <th>User ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Mobile No</th>
+          <th>Acount Activated</th>
+          <th>Acount Name</th>
+          <th>Acount Number</th>
+          <th>Acount Type</th>
+          <th>Bank</th>
+          <th>Branch Code</th>
+          <th>E-Wallet</th>
+          <th>Email</th>
+          <th>Wallet</th>
+          <th>Whatsapp No</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <div class="loader" style="margin-left: 50%"></div>
+        <tr *ngFor="let person of data; index as i">
+          <td>
+            <button class="btn" (click)="onSubmissions(person.userId)">
+              Submission
+            </button>
+            <button
+              class="btn margin-left-10"
+              (click)="onPayouts(person.userId)"
+            >
+              Payouts
+            </button>
+          </td>
+          <td>{{ person.userId }}</td>
+          <td>{{ person.firstName }}</td>
+          <td>{{ person.lastName }}</td>
+          <td>{{ person.mobileNumber }}</td>
+          <td
+            (click)="
+              onBlock(
+                person.userId,
+                person.accountActivated,
+                'accountActivated'
+              )
+            "
+          >
+            {{ person.accountActivated }}
+          </td>
+          <td>{{ person.accountName }}</td>
+          <td>{{ person.accountNumber }}</td>
+          <td>{{ person.accountType }}</td>
+          <td>{{ person.bank }}</td>
+          <td>{{ person.branchCode }}</td>
+          <td (click)="onBlock(person.userId, person.eWallet, 'eWallet')">
+            {{ person.eWallet }}
+          </td>
+          <td>{{ person.email }}</td>
+          <td *ngIf="person.isEditable">
+            <input #val type="text" (change)="person.wallet = val.value" />
+          </td>
+          <td
+            *ngIf="!person.isEditable"
+            (click)="person.isEditable = !person.isEditable"
+          >
+            {{ person.wallet }}
+          </td>
+          <td>{{ person.whatsAppNumber }}</td>
+          <td>
+            <button
+              class="btn"
+              [disabled]="!person.isEditable"
+              (click)="
+                [
+                  (person.isEditable = !person.isEditable),
+                  onChange(person.userId, person.wallet)
+                ]
+              "
+            >
+              Change Value
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>
+            <input #id type="text" />
+            <button
+              class="btn"
+              (click)="onFilId(id.value)"
+              style="margin-top: 7px"
+            >
+              Filter by UID
+            </button>
+          </td>
+          <td>
+            <input #email type="text" />
+            <button
+              class="btn"
+              (click)="onFilEmail(email.value)"
+              style="margin-top: 7px"
+            >
+              Filter by UserEmail
+            </button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

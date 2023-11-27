@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "flutter-chat-fe42e": {
+      "hosting": {
+        "status-up-development": [
+          "flutter-chat-fe42e"
+        ]
+      }
+    }
+  }
+}
